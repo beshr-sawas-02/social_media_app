@@ -8,6 +8,7 @@ import 'package:social_media_app/utils/colors.dart';
 import 'package:social_media_app/utils/icons.dart';
 import 'package:social_media_app/view/home/home_navigation_bar/home/comment_screen.dart';
 import 'package:social_media_app/view/home/home_navigation_bar/profile/widget/edit_profile_sheet.dart';
+import 'package:social_media_app/widgets/app_ui.dart';
 
 class ProfileNavScreen extends StatefulWidget {
   const ProfileNavScreen({super.key});
@@ -47,40 +48,27 @@ class _ProfileNavScreenState extends State<ProfileNavScreen> {
         final email = profile?.email ?? '';
         final phone = profile?.phone ?? '';
 
-        return ColoredBox(
-          color: AppColors.background,
+        return AppPageBackground(
           child: RefreshIndicator(
             color: AppColors.primary,
             onRefresh: controller.loadProfile,
             child: CustomScrollView(
               physics: const AlwaysScrollableScrollPhysics(),
               slivers: [
-                SliverAppBar(
-                  pinned: true,
-                  elevation: 0,
-                  backgroundColor: AppColors.surface,
-                  surfaceTintColor: Colors.transparent,
-                  title: const Text(
-                    'Profile',
-                    style: TextStyle(
-                      color: AppColors.textPrimary,
-                      fontWeight: FontWeight.w700,
-                      fontSize: 20,
-                    ),
-                  ),
-                  actions: [
-                    IconButton(
-                      tooltip: 'Logout',
-                      onPressed: () => _confirmLogout(controller),
-                      icon: const Icon(
-                        Icons.logout_rounded,
-                        color: AppColors.textSecondary,
+                SliverToBoxAdapter(
+                  child: AppTopBar(
+                    title: 'Profile',
+                    subtitle: 'Your space',
+                    actions: [
+                      IconButton(
+                        tooltip: 'Logout',
+                        onPressed: () => _confirmLogout(controller),
+                        icon: const Icon(
+                          Icons.logout_rounded,
+                          color: AppColors.textSecondary,
+                        ),
                       ),
-                    ),
-                  ],
-                  bottom: PreferredSize(
-                    preferredSize: const Size.fromHeight(1),
-                    child: Container(height: 1, color: AppColors.divider),
+                    ],
                   ),
                 ),
                 if (controller.profileLoading && profile == null)
@@ -180,26 +168,10 @@ class _ProfileNavScreenState extends State<ProfileNavScreen> {
                               Row(
                                 children: [
                                   Expanded(
-                                    child: FilledButton.icon(
+                                    child: AppGradientButton(
+                                      label: 'Add Post',
+                                      icon: AppIcons.addPost,
                                       onPressed: () => controller.getIndex(2),
-                                      style: FilledButton.styleFrom(
-                                        backgroundColor: AppColors.primary,
-                                        foregroundColor: Colors.white,
-                                        padding: const EdgeInsets.symmetric(
-                                          vertical: 12,
-                                        ),
-                                        shape: RoundedRectangleBorder(
-                                          borderRadius:
-                                              BorderRadius.circular(12),
-                                        ),
-                                      ),
-                                      icon: Icon(AppIcons.addPost, size: 18),
-                                      label: const Text(
-                                        'Add Post',
-                                        style: TextStyle(
-                                          fontWeight: FontWeight.w700,
-                                        ),
-                                      ),
                                     ),
                                   ),
                                   const SizedBox(width: 10),
@@ -215,11 +187,11 @@ class _ProfileNavScreenState extends State<ProfileNavScreen> {
                                           color: AppColors.divider,
                                         ),
                                         padding: const EdgeInsets.symmetric(
-                                          vertical: 12,
+                                          vertical: 14,
                                         ),
                                         shape: RoundedRectangleBorder(
                                           borderRadius:
-                                              BorderRadius.circular(12),
+                                              BorderRadius.circular(14),
                                         ),
                                       ),
                                       icon: Icon(AppIcons.edit, size: 18),

@@ -9,6 +9,7 @@ import 'package:social_media_app/utils/app_images.dart';
 import 'package:social_media_app/utils/colors.dart';
 import 'package:social_media_app/utils/date_utils.dart';
 import 'package:social_media_app/view/home/home_navigation_bar/chat/chat_conversation_screen.dart';
+import 'package:social_media_app/widgets/app_ui.dart';
 
 class ChatNavScreen extends StatefulWidget {
   const ChatNavScreen({super.key});
@@ -78,59 +79,25 @@ class _ChatNavScreenState extends State<ChatNavScreen> {
       builder: (controller) {
         final people = controller.otherUsers.where(_matches).toList();
 
-        return ColoredBox(
-          color: AppColors.background,
+        return AppPageBackground(
           child: Column(
             children: [
-              Container(
-                color: AppColors.surface,
-                padding: EdgeInsets.only(
-                  top: MediaQuery.of(context).padding.top,
-                ),
-                child: Column(
-                  children: [
-                    const Padding(
-                      padding: EdgeInsets.fromLTRB(16, 10, 16, 8),
-                      child: Align(
-                        alignment: Alignment.centerLeft,
-                        child: Text(
-                          'Chat',
-                          style: TextStyle(
-                            fontSize: 22,
-                            fontWeight: FontWeight.w800,
-                            color: AppColors.textPrimary,
-                          ),
-                        ),
-                      ),
+              const AppTopBar(
+                title: 'Chat',
+                subtitle: 'Messages & people',
+              ),
+              Padding(
+                padding: const EdgeInsets.fromLTRB(16, 12, 16, 0),
+                child: TextField(
+                  controller: _searchController,
+                  onChanged: (v) => setState(() => _query = v.trim()),
+                  decoration: const InputDecoration(
+                    hintText: 'Search people...',
+                    prefixIcon: Icon(
+                      Icons.search_rounded,
+                      color: AppColors.textSecondary,
                     ),
-                    Padding(
-                      padding: const EdgeInsets.fromLTRB(16, 0, 16, 12),
-                      child: TextField(
-                        controller: _searchController,
-                        onChanged: (v) => setState(() => _query = v.trim()),
-                        decoration: InputDecoration(
-                          hintText: 'Search people...',
-                          hintStyle:
-                              const TextStyle(color: AppColors.textSecondary),
-                          prefixIcon: const Icon(
-                            Icons.search_rounded,
-                            color: AppColors.textSecondary,
-                          ),
-                          filled: true,
-                          fillColor: AppColors.background,
-                          contentPadding: const EdgeInsets.symmetric(
-                            horizontal: 14,
-                            vertical: 12,
-                          ),
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(14),
-                            borderSide: BorderSide.none,
-                          ),
-                        ),
-                      ),
-                    ),
-                    const Divider(height: 1, color: AppColors.divider),
-                  ],
+                  ),
                 ),
               ),
               Expanded(

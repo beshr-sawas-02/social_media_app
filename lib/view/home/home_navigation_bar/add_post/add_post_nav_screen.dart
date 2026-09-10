@@ -6,6 +6,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:social_media_app/controller/home_controller.dart';
 import 'package:social_media_app/utils/app_images.dart';
 import 'package:social_media_app/utils/colors.dart';
+import 'package:social_media_app/widgets/app_ui.dart';
 
 class AddPostNavScreen extends StatefulWidget {
   const AddPostNavScreen({super.key});
@@ -65,30 +66,38 @@ class _AddPostNavScreenState extends State<AddPostNavScreen> {
             controller.caption.text.trim().isNotEmpty &&
             !controller.isPosting;
 
-        return ColoredBox(
-          color: AppColors.background,
+        return AppPageBackground(
           child: Column(
             children: [
               Container(
                 color: AppColors.surface,
-                padding: EdgeInsets.only(
-                  top: MediaQuery.of(context).padding.top,
-                ),
                 child: Column(
                   children: [
+                    SizedBox(height: MediaQuery.of(context).padding.top),
                     Padding(
                       padding: const EdgeInsets.fromLTRB(8, 4, 8, 8),
                       child: Row(
                         children: [
                           const Expanded(
-                            child: Text(
-                              'Create Post',
-                              textAlign: TextAlign.center,
-                              style: TextStyle(
-                                fontSize: 18,
-                                fontWeight: FontWeight.w800,
-                                color: AppColors.textPrimary,
-                              ),
+                            child: Column(
+                              children: [
+                                Text(
+                                  'Create Post',
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.w800,
+                                    color: AppColors.textPrimary,
+                                  ),
+                                ),
+                                Text(
+                                  'Share a moment',
+                                  style: TextStyle(
+                                    fontSize: 12,
+                                    color: AppColors.textSecondary,
+                                  ),
+                                ),
+                              ],
                             ),
                           ),
                           FilledButton(
@@ -123,7 +132,12 @@ class _AddPostNavScreenState extends State<AddPostNavScreen> {
                         ],
                       ),
                     ),
-                    const Divider(height: 1, color: AppColors.divider),
+                    Container(
+                      height: 2.5,
+                      decoration: const BoxDecoration(
+                        gradient: AppColors.primaryGradient,
+                      ),
+                    ),
                   ],
                 ),
               ),
