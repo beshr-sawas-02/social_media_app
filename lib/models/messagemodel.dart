@@ -5,25 +5,26 @@ class MessageModel {
   final Timestamp date;
   final bool isSender;
 
-  MessageModel(
-      {required this.message,
-        required this.date,
-        required this.isSender
-      });
+  MessageModel({
+    required this.message,
+    required this.date,
+    required this.isSender,
+  });
 
-  factory MessageModel.fromJson(Map<String,dynamic> json){
+  factory MessageModel.fromJson(Map<String, dynamic> json) {
+    final rawDate = json['date'];
     return MessageModel(
-        message: json['message'],
-        date: json['date'],
-        isSender: json['isSender']
+      message: json['message']?.toString() ?? '',
+      date: rawDate is Timestamp ? rawDate : Timestamp.now(),
+      isSender: json['isSender'] == true,
     );
   }
 
-  Map<String,dynamic>toJson(){
+  Map<String, dynamic> toJson() {
     return {
-      'message':message,
-      'date':date,
-      'isSender':isSender,
+      'message': message,
+      'date': date,
+      'isSender': isSender,
     };
   }
 }

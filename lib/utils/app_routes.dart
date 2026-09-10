@@ -9,15 +9,15 @@ class AppRoutes {
   static final List<GetPage> namePages = [
     GetPage(
       name: RoutesPath.login,
-      page: () => LoginPage(),
+      page: () => const LoginPage(),
     ),
     GetPage(
      name: RoutesPath.home,
-      page: () =>  HomePage(),
+      page: () =>  const HomePage(),
    ),
     GetPage(
      name: RoutesPath.signup,
-      page: () =>  SignUp(),
+      page: () =>  const SignUp(),
    ),
   ];
 }
@@ -31,7 +31,7 @@ class RoutesPath {
 class RoutesWrapper {
   static get getInitialRoute {
     if (FirebaseAuth.instance.currentUser != null) {
-      return RoutesPath.login;
+      return RoutesPath.home;
     } else {
       return RoutesPath.login;
     }

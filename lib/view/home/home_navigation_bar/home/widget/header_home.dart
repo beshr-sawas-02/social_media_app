@@ -1,6 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:social_media_app/controller/home_controller.dart';
 import 'package:social_media_app/models/post_model.dart';
+import 'package:social_media_app/models/user_model.dart';
 import 'package:social_media_app/utils/app_images.dart';
+import 'package:social_media_app/utils/colors.dart';
+import 'package:social_media_app/utils/date_utils.dart';
 import 'package:social_media_app/utils/icons.dart';
 
 class HeaderPost extends StatelessWidget {
@@ -9,56 +14,66 @@ class HeaderPost extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final controller = Get.find<HomeController>();
+    final UserModel? user = controller.findUser(post.userId);
+    final name = (user?.username.isNotEmpty ?? false)
+        ? user!.username
+        : 'User';
+    final ImageProvider avatar = (user?.image.isNotEmpty ?? false)
+        ? NetworkImage(user!.image) as ImageProvider
+        : AssetImage(AppImages.profile);
+
     return Row(
       children: [
-        Padding(
-          padding: const EdgeInsets.only(
-            right: 8.0,
-            left: 8.0,
-            top: 5.0,
-          ),
-          child: CircleAvatar(
-            radius: 25,
-            backgroundImage: AssetImage(AppImages.profile),
-          ),
+        CircleAvatar(
+          radius: 22,
+          backgroundColor: AppColors.divider,
+          backgroundImage: avatar,
         ),
-         Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Row(
-              children: [
-                Text(
-                  "beshr sawas",
-                  style: TextStyle(
-                    fontSize: 15,
-                    fontWeight: FontWeight.bold,
+        const SizedBox(width: 10),
+        Expanded(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Row(
+                children: [
+                  Flexible(
+                    child: Text(
+                      name,
+                      overflow: TextOverflow.ellipsis,
+                      style: const TextStyle(
+                        fontSize: 15,
+                        fontWeight: FontWeight.w700,
+                        color: AppColors.textPrimary,
+                      ),
+                    ),
                   ),
-                ),
-                SizedBox(
-                  width: 3,
-                ),
-                Icon(
-                  Icons.check_circle,
-                  color: Colors.blue,
-                ),
-              ],
-            ),
-            Text(
-              post.date.toString(),
-              style: TextStyle(
-                color: Colors.grey,
+                  if (user != null) ...[
+                    const SizedBox(width: 4),
+                    const Icon(
+                      Icons.verified_rounded,
+                      size: 16,
+                      color: AppColors.primary,
+                    ),
+                  ],
+                ],
               ),
-            ),
-          ],
+              const SizedBox(height: 2),
+              Text(
+                formatRelativeTime(post.date),
+                overflow: TextOverflow.ellipsis,
+                style: const TextStyle(
+                  color: AppColors.textSecondary,
+                  fontSize: 12,
+                ),
+              ),
+            ],
+          ),
         ),
-        const Spacer(),
-        Padding(
-          padding: const EdgeInsets.all(
-            8.0,
-          ),
-          child: Icon(
-            AppIcons.more,
-          ),
+        IconButton(
+          onPressed: () {},
+          visualDensity: VisualDensity.compact,
+          icon: Icon(AppIcons.more, color: AppColors.textSecondary),
         ),
       ],
     );

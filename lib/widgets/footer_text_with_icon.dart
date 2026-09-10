@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class FooterTextWithIcon extends StatelessWidget {
-   FooterTextWithIcon({
+   const FooterTextWithIcon({
     super.key,
     required this.icon,
     required this.text,

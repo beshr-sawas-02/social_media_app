@@ -20,7 +20,7 @@ class CustomButtom extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialButton(
-      padding: EdgeInsetsDirectional.all(10),
+      padding: const EdgeInsetsDirectional.all(10),
       minWidth: MediaQuery.of(context).size.width,
       shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.all(Radius.circular(radius ?? 10))),
@@ -29,7 +29,7 @@ class CustomButtom extends StatelessWidget {
       child: child ??
           Text(
             label ?? '',
-            style: TextStyle(
+            style: const TextStyle(
               fontSize: 18,
               fontWeight: FontWeight.bold,
               color: Colors.white,

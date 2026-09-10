@@ -5,10 +5,10 @@ class ExpandableText extends StatefulWidget {
   final String text;
   final int trimLines;
 
-  ExpandableText({required this.text, this.trimLines = 3});
+  const ExpandableText({super.key, required this.text, this.trimLines = 3});
 
   @override
-  _ExpandableTextState createState() => _ExpandableTextState();
+  State<ExpandableText> createState() => _ExpandableTextState();
 }
 
 class _ExpandableTextState extends State<ExpandableText> {
@@ -22,16 +22,15 @@ class _ExpandableTextState extends State<ExpandableText> {
 
   @override
   Widget build(BuildContext context) {
-    final colorClickableText = Colors.blue;
     final widgetSpan = TextSpan(
       text: _isExpanded ? " See less" : " See more",
-      style: TextStyle(color: colorClickableText),
+      style: const TextStyle(color: Color(0xFF6C3CE1), fontWeight: FontWeight.w600),
       recognizer: TapGestureRecognizer()..onTap = _toggleExpanded,
     );
 
     final text = TextSpan(
       text: widget.text,
-      style: TextStyle(color: Colors.black),
+      style: const TextStyle(color: Color(0xFF1C1C1E), height: 1.35),
       children: [_isExpanded ? widgetSpan : null].whereType<TextSpan>().toList(),
     );
 
@@ -61,7 +60,7 @@ class _ExpandableTextState extends State<ExpandableText> {
                     Offset(size.maxWidth, textPainter.height),
                   ).offset,
                 ),
-                style: TextStyle(color: Colors.black),
+                style: const TextStyle(color: Color(0xFF1C1C1E), height: 1.35),
                 children: [widgetSpan],
               ),
             ),
